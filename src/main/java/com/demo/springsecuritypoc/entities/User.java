@@ -1,15 +1,17 @@
 package com.demo.springsecuritypoc.entities;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "app_users")
-@Data
+@Table(name = "App_User")
+@Getter
+@Setter
 public class User {
-
     @Id
     private Long id;
 
@@ -18,10 +20,6 @@ public class User {
 
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_authorities",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
-    private List<Authority> userAuthorities;
+    @ManyToMany(mappedBy = "users")
+    private List<Role> roles;
 }
